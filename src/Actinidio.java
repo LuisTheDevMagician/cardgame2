@@ -68,6 +68,10 @@ public class Actinidio {
     JButton selecionarCarta1;
     JButton selecionarCarta2;
 
+    //private static MenuSom botao = new MenuSom();
+    //private static MenuSom botao2 = new MenuSom();
+
+
     Actinidio() {
         mostrarCarta();
         misturarCarta();
@@ -100,6 +104,7 @@ public class Actinidio {
             botao.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    //botao2.playButtonSound3();
                     if (!jogoPronto) {
                         return;
                     }
@@ -155,6 +160,7 @@ public class Actinidio {
         restartGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //botao.playButtonSound2();
                 if (!jogoPronto) {
                     return;
                 }
@@ -192,6 +198,7 @@ public class Actinidio {
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //botao.playButtonSound2();
                 frame.dispose(); // Fecha a janela atual
                 new Jogo(); // Retorna para a classe Jogo
             }

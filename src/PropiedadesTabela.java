@@ -41,6 +41,9 @@ public class PropiedadesTabela implements ActionListener {
     int cartaLargura = 90;
     int cartaAltura = 128;
 
+
+
+
     ImageIcon[][] imagens = {
             {
                     new ImageIcon(new ImageIcon(getClass().getResource("propiedades/raioatomico/cesio.jpg"))
@@ -307,6 +310,7 @@ public class PropiedadesTabela implements ActionListener {
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //botao.playButtonSound2();
                 frame.dispose(); // Fecha a janela atual
                 new Jogo(); // Retorna para a classe Jogo
             }
@@ -369,6 +373,8 @@ public class PropiedadesTabela implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
+        //botao.playButtonSound2();
 
         botaoA.setEnabled(false);
         botaoB.setEnabled(false);

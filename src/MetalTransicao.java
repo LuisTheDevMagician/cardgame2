@@ -64,6 +64,9 @@ public class MetalTransicao {
     JButton selecionarCarta1;
     JButton selecionarCarta2;
 
+
+
+
     MetalTransicao() {
         mostrarCarta();
         misturarCarta();
@@ -151,6 +154,7 @@ public class MetalTransicao {
         restartGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //botao.playButtonSound2();
                 if (!jogoPronto) {
                     return;
                 }
@@ -188,6 +192,7 @@ public class MetalTransicao {
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //botao.playButtonSound2();
                 frame.dispose(); // Fecha a janela atual
                 new Jogo(); // Retorna para a classe Jogo
             }

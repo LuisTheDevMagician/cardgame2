@@ -60,7 +60,16 @@ public class SemiMetal {
     JButton selecionarCarta1;
     JButton selecionarCarta2;
 
+
+
+    private MenuSom menuSom = MenuSom.getInstance();
+
     SemiMetal() {
+
+        if(menuSom != null) {
+            menuSom.startBackgroundMusic();
+        }
+
         mostrarCarta();
         misturarCarta();
 
@@ -147,6 +156,7 @@ public class SemiMetal {
         restartGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                menuSom.playButtonSound2();
                 if (!jogoPronto) {
                     return;
                 }
@@ -184,6 +194,7 @@ public class SemiMetal {
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                menuSom.playButtonSound2();
                 frame.dispose(); // Fecha a janela atual
                 new Jogo(); // Retorna para a classe Jogo
             }

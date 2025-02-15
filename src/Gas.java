@@ -60,7 +60,14 @@ public class Gas {
     JButton selecionarCarta1;
     JButton selecionarCarta2;
 
-    Gas() {
+    private MenuSom menuSom = MenuSom.getInstance();
+
+    public Gas() {
+
+        if(menuSom != null) {
+            menuSom.startBackgroundMusic();
+        }
+
         mostrarCarta();
         misturarCarta();
 
@@ -146,6 +153,7 @@ public class Gas {
         restartGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                menuSom.playButtonSound2();
                 if (!jogoPronto) {
                     return;
                 }
@@ -183,6 +191,7 @@ public class Gas {
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                menuSom.playButtonSound2();
                 frame.dispose(); // Fecha a janela atual
                 new Jogo(); // Retorna para a classe Jogo
             }

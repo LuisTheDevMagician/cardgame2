@@ -3,18 +3,26 @@ import javax.swing.*;
 
 public class Jogo extends JFrame {
 
+    private static MenuSom menu = MenuSom.getInstance();
+
     public Jogo() {
         super("Exemplo JLabel e Icon");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new FlowLayout());
-        setBounds(100, 100, 800, 600);
+        setBounds(350, 100, 800, 600);
+        setResizable(false);
 
-        JPanel panel = new JPanel(new GridLayout(11, 1, 11, 11));
+        JPanel panel = new JPanel(new GridLayout(6, 2, 11, 11));
+
+       if(menu != null) {
+           menu.startBackgroundMusic();
+        }
 
         // Criando um botão com as novas configurações
         JButton gas = criarBotao("Gases", Color.CYAN);
         gas.addActionListener(e -> {
+            menu.playButtonSound();
             dispose();
             new Gas();
         });
@@ -22,6 +30,7 @@ public class Jogo extends JFrame {
 
         JButton semimetal = criarBotao("Semimetais", Color.PINK);
         semimetal.addActionListener(e -> {
+            menu.playButtonSound();
             dispose();
             new SemiMetal();
         });
@@ -29,6 +38,7 @@ public class Jogo extends JFrame {
 
         JButton metalpostransicao = criarBotao("Metais de Pós Transição", Color.YELLOW);
         metalpostransicao.addActionListener(e -> {
+            menu.playButtonSound();
             dispose();
             new MetalPosTransicao();
         });
@@ -36,6 +46,7 @@ public class Jogo extends JFrame {
 
         JButton naometal = criarBotao("Não Metais", Color.GREEN);
         naometal.addActionListener(e -> {
+            menu.playButtonSound();
             dispose();
             new NaoMetal();
         });
@@ -43,6 +54,7 @@ public class Jogo extends JFrame {
 
         JButton superpesado = criarBotao("Elementos Super pesados", Color.ORANGE);
         superpesado.addActionListener(e -> {
+            menu.playButtonSound();
             dispose();
             new SuperPesado();
         });
@@ -50,6 +62,7 @@ public class Jogo extends JFrame {
 
         JButton alcalino = criarBotao("Metais Alcalinos e Alcalinos Terrosos", Color.MAGENTA);
         alcalino.addActionListener(e -> {
+            menu.playButtonSound();
             dispose();
             new AlcalinoAlcalinoTerroso();
         });
@@ -57,6 +70,7 @@ public class Jogo extends JFrame {
 
         JButton actidio = criarBotao("Actinídeos", Color.GREEN);
         actidio.addActionListener(e -> {
+            menu.playButtonSound();
             dispose();
             new Actinidio();
         });
@@ -64,6 +78,7 @@ public class Jogo extends JFrame {
 
         JButton latanidio = criarBotao("Lantanídeos", Color.RED);
         latanidio.addActionListener(e -> {
+            menu.playButtonSound();
             dispose();
             new Latanideo();
         });
@@ -71,6 +86,7 @@ public class Jogo extends JFrame {
 
         JButton transicao = criarBotao("Metais de Transição", Color.BLUE);
         transicao.addActionListener(e -> {
+            menu.playButtonSound();
             dispose();
             new MetalTransicao();
         });
@@ -78,6 +94,7 @@ public class Jogo extends JFrame {
 
         JButton curiosidade = criarBotao("Curiosidades", Color.GRAY);
         curiosidade.addActionListener(e -> {
+            menu.playButtonSound();
             dispose();
             new CuriosidadeElementos();
         });
@@ -85,6 +102,7 @@ public class Jogo extends JFrame {
 
         JButton propiedades = criarBotao("Propiedades da Tabela", Color.LIGHT_GRAY);
         propiedades.addActionListener(e -> {
+            menu.playButtonSound();
             dispose();
             new PropiedadesTabela();
         });
@@ -100,7 +118,7 @@ public class Jogo extends JFrame {
     // Função para criar botões com estilo
     private JButton criarBotao(String texto, Color cor) {
         JButton botao = new JButton(texto);
-        botao.setFont(new Font("Arial", Font.PLAIN, 18));
+        botao.setFont(new Font("Arial", Font.BOLD, 20));
         botao.setPreferredSize(new Dimension(200, 200)); // Botão quadrado e menor
         botao.setBackground(cor);  // Definir a cor de fundo
         botao.setForeground(Color.WHITE); // Cor do texto

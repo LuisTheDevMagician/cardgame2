@@ -30,6 +30,9 @@ public class CuriosidadeElementos implements ActionListener {
     int cartaLargura = 90;
     int cartaAltura = 128;
 
+
+
+
     ImageIcon[][] imagens = {
             {
                     new ImageIcon(new ImageIcon(getClass().getResource("curiosidade/radioativo/uranio.jpg"))
@@ -246,6 +249,7 @@ public class CuriosidadeElementos implements ActionListener {
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                //botao.playButtonSound2();
                 frame.dispose(); // Fecha a janela atual
                 new Jogo(); // Retorna para a classe Jogo
             }
