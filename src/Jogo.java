@@ -8,7 +8,6 @@ public class Jogo extends JFrame {
     public Jogo() {
         super("Exemplo JLabel e Icon");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
         setLayout(new FlowLayout());
         setBounds(350, 100, 800, 600);
         setResizable(false);
@@ -107,6 +106,14 @@ public class Jogo extends JFrame {
             new PropiedadesTabela();
         });
         panel.add(propiedades);
+
+        JButton escolherMusica = criarBotao("Escolha Música de Fundo", Color.BLACK);
+        escolherMusica.addActionListener(e -> {
+            menu.playButtonSound();
+            dispose();
+            menu.selecionarNovoSom();
+        });
+        panel.add(escolherMusica);
 
         panel.setBorder(BorderFactory.createEmptyBorder(9, 9, 9, 9));
 

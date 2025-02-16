@@ -63,16 +63,20 @@ public class SuperPesado {
     JButton selecionarCarta1;
     JButton selecionarCarta2;
 
-
+    private MenuSom menuSom = MenuSom.getInstance();
 
     SuperPesado() {
+
+        if(menuSom != null) {
+            menuSom.startBackgroundMusic();
+        }
+
         mostrarCarta();
         misturarCarta();
 
 
         frame.setLayout(new BorderLayout());
-        frame.setSize(bordaLargura, bordaAltura);
-        frame.setLocationRelativeTo(null);
+        frame.setBounds(300, 200, bordaLargura, bordaAltura );
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -152,7 +156,7 @@ public class SuperPesado {
         restartGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //botao.playButtonSound2();
+                menuSom.playButtonSound2();
                 if (!jogoPronto) {
                     return;
                 }
@@ -190,7 +194,7 @@ public class SuperPesado {
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //botao.playButtonSound2();
+                menuSom.playButtonSound2();
                 frame.dispose(); // Fecha a janela atual
                 new Jogo(); // Retorna para a classe Jogo
             }

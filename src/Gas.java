@@ -72,8 +72,7 @@ public class Gas {
         misturarCarta();
 
         frame.setLayout(new BorderLayout());
-        frame.setSize(bordaLargura, bordaAltura);
-        frame.setLocationRelativeTo(null);
+        frame.setBounds(450, 200, bordaLargura, bordaAltura );
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

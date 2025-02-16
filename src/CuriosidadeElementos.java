@@ -30,7 +30,7 @@ public class CuriosidadeElementos implements ActionListener {
     int cartaLargura = 90;
     int cartaAltura = 128;
 
-
+    private MenuSom menuSom = MenuSom.getInstance();
 
 
     ImageIcon[][] imagens = {
@@ -146,6 +146,11 @@ public class CuriosidadeElementos implements ActionListener {
     });
 
     public CuriosidadeElementos() {
+
+        if(menuSom != null) {
+            menuSom.startBackgroundMusic();
+        }
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 800);
         frame.getContentPane().setBackground(Color.BLACK);
@@ -249,7 +254,7 @@ public class CuriosidadeElementos implements ActionListener {
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //botao.playButtonSound2();
+                menuSom.playButtonSound2();
                 frame.dispose(); // Fecha a janela atual
                 new Jogo(); // Retorna para a classe Jogo
             }

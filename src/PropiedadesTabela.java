@@ -41,7 +41,7 @@ public class PropiedadesTabela implements ActionListener {
     int cartaLargura = 90;
     int cartaAltura = 128;
 
-
+    private MenuSom menuSom = MenuSom.getInstance();
 
 
     ImageIcon[][] imagens = {
@@ -207,6 +207,11 @@ public class PropiedadesTabela implements ActionListener {
     });
 
     public PropiedadesTabela() {
+
+        if(menuSom != null) {
+            menuSom.startBackgroundMusic();
+        }
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1050, 800);
         frame.getContentPane().setBackground(Color.BLACK);
@@ -310,7 +315,7 @@ public class PropiedadesTabela implements ActionListener {
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //botao.playButtonSound2();
+                menuSom.playButtonSound2();
                 frame.dispose(); // Fecha a janela atual
                 new Jogo(); // Retorna para a classe Jogo
             }
@@ -374,7 +379,7 @@ public class PropiedadesTabela implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        //botao.playButtonSound2();
+        menuSom.playButtonSound2();
 
         botaoA.setEnabled(false);
         botaoB.setEnabled(false);
