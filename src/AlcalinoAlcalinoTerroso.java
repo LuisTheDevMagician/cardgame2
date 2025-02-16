@@ -95,6 +95,7 @@ public class AlcalinoAlcalinoTerroso {
             botao.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    menuSom.playButtonSound2();
                     if (!jogoPronto) {
                         return;
                     }
@@ -110,10 +111,12 @@ public class AlcalinoAlcalinoTerroso {
                             selecionarCarta2.setIcon(deckCarta.get(index).iconeCarta);
 
                             if (selecionarCarta1.getIcon() != selecionarCarta2.getIcon()) {
+                                menuSom.playSomErro();
                                 contadorDeErros++;
                                 atualizarTextoLabel();
                                 esconderCartasGame.start();
                             } else {
+                                menuSom.playSomAcerto();
                                 selecionarCarta1 = null;
                                 selecionarCarta2 = null;
                                 contadorAcertos++; // Incrementa os acertos
@@ -121,6 +124,11 @@ public class AlcalinoAlcalinoTerroso {
 
                                 // Se todos os pares foram encontrados, exibir mensagem
                                 if (contadorAcertos == totalDePares) {
+                                    if(contadorAcertos > contadorDeErros){
+                                        menuSom.playVitoria();
+                                    }else{
+                                        menuSom.playVitoriaNotBased();
+                                    }
                                     // Para o contador de tempo quando o jogo termina
                                     timer.stop();
                                     JOptionPane.showMessageDialog(frame,
@@ -151,6 +159,8 @@ public class AlcalinoAlcalinoTerroso {
             @Override
             public void actionPerformed(ActionEvent e) {
                 menuSom.playButtonSound2();
+                menuSom.stopVitoria();
+                menuSom.stopVitoriaNotBased();
                 if (!jogoPronto) {
                     return;
                 }
@@ -189,6 +199,8 @@ public class AlcalinoAlcalinoTerroso {
             @Override
             public void actionPerformed(ActionEvent e) {
                 menuSom.playButtonSound2();
+                menuSom.stopVitoria();
+                menuSom.stopVitoriaNotBased();
                 frame.dispose(); // Fecha a janela atual
                 new Jogo(); // Retorna para a classe Jogo
             }

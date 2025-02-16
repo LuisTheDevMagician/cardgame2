@@ -213,7 +213,7 @@ public class PropiedadesTabela implements ActionListener {
         }
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1050, 800);
+        frame.setBounds(250, 0, 1050, 800);
         frame.getContentPane().setBackground(Color.BLACK);
         frame.setLayout(null);
         frame.setResizable(false);
@@ -316,6 +316,10 @@ public class PropiedadesTabela implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 menuSom.playButtonSound2();
+                menuSom.stopVitoria();
+                menuSom.stopVitoriaNotBased();
+                menuSom.stopAiMamae();
+                menuSom.stopSeloko();
                 frame.dispose(); // Fecha a janela atual
                 new Jogo(); // Retorna para a classe Jogo
             }
@@ -379,7 +383,7 @@ public class PropiedadesTabela implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        menuSom.playButtonSound2();
+        menuSom.playSomCarta();
 
         botaoA.setEnabled(false);
         botaoB.setEnabled(false);
@@ -401,6 +405,13 @@ public class PropiedadesTabela implements ActionListener {
 
         if (chute == respostas[index]) {
             chutes_corretos++;
+        }
+
+        if (chute == respostas[index]) {
+            menuSom.playSomAcerto();
+            chutes_corretos++;
+        }else{
+            menuSom.playSomErro();
         }
 
         mostarResposta();
@@ -448,8 +459,24 @@ public class PropiedadesTabela implements ActionListener {
 
         resultado = (int) ((chutes_corretos / (double) total_perguntas) * 100);
 
-        textfiled.setText("Resultados: ");
-        textfiled.setFont(new Font("Arial", Font.PLAIN, 60));
+        if(resultado == 100){
+            menuSom.playVitoria();
+            textfiled.setText("Parabéns acertou todas as questões!");
+            textfiled.setFont(new Font("Arial", Font.PLAIN, 40));
+        }else if(resultado < 100 && resultado >= 70){
+            menuSom.playVitoriaNotBased();
+            textfiled.setText("Aprovado, parabéns");
+            textfiled.setFont(new Font("Arial", Font.PLAIN, 60));
+        } else if (resultado >= 40 && resultado < 70) {
+            menuSom.playVitoriaAimamae();
+            textfiled.setText("Prova final, estude mais");
+            textfiled.setFont(new Font("Arial", Font.PLAIN, 60));
+        } else if (resultado < 40) {
+            menuSom.playVitoriaSeloko();
+            textfiled.setText("Reprovado");
+            textfiled.setFont(new Font("Arial", Font.PLAIN, 60));
+        }
+
         textarea.setVisible(false);
         respostaLabelA.setVisible(false);
         respostaLabelB.setVisible(false);
