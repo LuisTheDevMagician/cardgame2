@@ -27,7 +27,7 @@ public class PropiedadesTabela implements ActionListener {
             {"Hélio", "Neônio", "Argônio", "Rênio"},
             {"Césio", "Frâncio", "Rubídio", "Potássio"},
             {"Iodo", "Bromo", "Flúor", "Cloro"},
-            {"Neônio", "Radônio", "Árgon", "Hélio"},
+            {"Neônio", "Radônio", "Hélio", "Árgon"},
             {"Potássio ", "Césio", "Rubídio", "Frâncio"},
             {"Ouro", "Platina", "Irídio ", "Ródio"},
             {"Flúor", "Cloro", "Bromo", "Iodo"},
@@ -35,7 +35,7 @@ public class PropiedadesTabela implements ActionListener {
     };
 
     char[] respostas = {
-            'C','B','C','D','A','B','D','C','D','B','B','A'
+            'C','B','C','D','A','B','D','C','D','A','A','B'
     };
 
     int cartaLargura = 90;
@@ -120,9 +120,9 @@ public class PropiedadesTabela implements ActionListener {
                             .getImage().getScaledInstance(cartaLargura, cartaAltura, Image.SCALE_SMOOTH)),
                     new ImageIcon(new ImageIcon(getClass().getResource("propiedades/afinidade/radonio.jpg"))
                             .getImage().getScaledInstance(cartaLargura, cartaAltura, Image.SCALE_SMOOTH)),
-                    new ImageIcon(new ImageIcon(getClass().getResource("propiedades/afinidade/argonio.jpg"))
-                            .getImage().getScaledInstance(cartaLargura, cartaAltura, Image.SCALE_SMOOTH)),
                     new ImageIcon(new ImageIcon(getClass().getResource("propiedades/afinidade/helio.jpg"))
+                            .getImage().getScaledInstance(cartaLargura, cartaAltura, Image.SCALE_SMOOTH)),
+                    new ImageIcon(new ImageIcon(getClass().getResource("propiedades/afinidade/argonio.jpg"))
                             .getImage().getScaledInstance(cartaLargura, cartaAltura, Image.SCALE_SMOOTH))
             },
             {
