@@ -219,21 +219,24 @@ public class PropiedadesTabela implements ActionListener {
         frame.setResizable(false);
 
         textfiled.setBounds(0, 0, 800, 100);
-        textfiled.setBackground(Color.BLACK);
         textfiled.setForeground(Color.YELLOW);
         textfiled.setFont(new Font("Arial", Font.PLAIN, 30));
         textfiled.setBorder(BorderFactory.createBevelBorder(1));
         textfiled.setHorizontalAlignment(JTextField.CENTER);
         textfiled.setEditable(false);
+        textfiled.setOpaque(false);
+        textfiled.setBackground(new Color(0, 0, 0, 0)); // Define o fundo como transparente
 
         textarea.setBounds(0, 100, 1000, 50);
         textarea.setLineWrap(true);
         textarea.setWrapStyleWord(true);
-        textarea.setBackground(Color.BLACK);
         textarea.setForeground(Color.YELLOW);
         textarea.setFont(new Font("Arial", Font.PLAIN, 20));
         textarea.setBorder(BorderFactory.createBevelBorder(1));
         textarea.setEditable(false);
+        textarea.setOpaque(false); // Torna o fundo transparente
+        textarea.setBackground(new Color(0, 0, 0, 0)); // Define o fundo como transparente
+
 
         botaoA.setBounds(0, 150, cartaLargura, cartaAltura);
         botaoA.setOpaque(true);
@@ -275,43 +278,57 @@ public class PropiedadesTabela implements ActionListener {
         respostaLabelD.setForeground(Color.YELLOW);
         respostaLabelD.setFont(new Font("Arial", Font.PLAIN, 30));
 
-        tempoRestante.setBounds(930, 680, 80, 80);
-        tempoRestante.setBackground(Color.BLACK);
-        tempoRestante.setForeground(Color.YELLOW);
-        tempoRestante.setFont(new Font("Arial", Font.PLAIN, 60));
-        tempoRestante.setBorder(BorderFactory.createBevelBorder(1));
-        tempoRestante.setOpaque(true);
-        tempoRestante.setHorizontalAlignment(JTextField.CENTER);
-        tempoRestante.setText(String.valueOf(segundos));
-
         tempoLabel.setBounds(850, 650, 200, 30);
-        tempoLabel.setBackground(Color.BLACK);
         tempoLabel.setForeground(Color.YELLOW);
         tempoLabel.setFont(new Font("Arial", Font.PLAIN, 20));
-        tempoLabel.setBorder(BorderFactory.createBevelBorder(1));
-        tempoLabel.setOpaque(true);
+        tempoLabel.setBorder(null); // Remove a borda
+        tempoLabel.setOpaque(false); // Torna o fundo transparente
+        tempoLabel.setBackground(new Color(0, 0, 0, 0)); // Define o fundo como transparente
         tempoLabel.setHorizontalAlignment(JTextField.CENTER);
         tempoLabel.setText("Tempo Restante");
 
+        tempoRestante.setBounds(925, 680, 80, 80);
+        tempoRestante.setForeground(Color.YELLOW);
+        tempoRestante.setFont(new Font("Arial", Font.PLAIN, 60));
+        tempoRestante.setBorder(null); // Remove a borda
+        tempoRestante.setOpaque(false); // Torna o fundo transparente
+        tempoRestante.setBackground(new Color(0, 0, 0, 0)); // Define o fundo como transparente
+        tempoRestante.setHorizontalAlignment(JTextField.CENTER);
+        tempoRestante.setText(String.valueOf(segundos));
+
         numeroAcertos.setBounds(100, 225, 600, 100);
-        numeroAcertos.setBackground(Color.BLACK);
         numeroAcertos.setForeground(Color.YELLOW);
         numeroAcertos.setFont(new Font("Arial", Font.PLAIN, 40));
         numeroAcertos.setBorder(BorderFactory.createBevelBorder(1));
         numeroAcertos.setHorizontalAlignment(JTextField.CENTER);
         numeroAcertos.setEditable(false);
+        numeroAcertos.setOpaque(false);
+        numeroAcertos.setBackground(new Color(0, 0, 0, 0));
+        numeroAcertos.setVisible(false);
 
         porcentagemAcertos.setBounds(100, 300, 600, 100);
-        porcentagemAcertos.setBackground(Color.BLACK);
         porcentagemAcertos.setForeground(Color.YELLOW);
         porcentagemAcertos.setFont(new Font("Arial", Font.PLAIN, 40));
         porcentagemAcertos.setBorder(BorderFactory.createBevelBorder(1));
         porcentagemAcertos.setHorizontalAlignment(JTextField.CENTER);
         porcentagemAcertos.setEditable(false);
+        porcentagemAcertos.setOpaque(false);
+        porcentagemAcertos.setBackground(new Color(0, 0, 0, 0));
+        porcentagemAcertos.setVisible(false);
+
+        ImageIcon backgroundImage = new ImageIcon(getClass().getResource("imgfundo/imageback1.jpg"));
+        JLabel backgroundLabel = new JLabel(backgroundImage);
+        backgroundLabel.setBounds(0, 0, 1050, 800);
 
         voltarButton.setFont(new Font("Arial", Font.PLAIN, 20));
         voltarButton.setFocusable(false);
-        voltarButton.setBounds(500, 700, 300, 300);
+        voltarButton.setOpaque(true);
+        voltarButton.setBorderPainted(false);
+        voltarButton.setBackground(Color.MAGENTA);
+        voltarButton.setForeground(Color.WHITE);
+        voltarButton.setBounds(250, 700, 0, 0);
+        voltarButton.setPreferredSize(new Dimension(100, 50));
+        //voltarButton.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         voltarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -325,8 +342,11 @@ public class PropiedadesTabela implements ActionListener {
             }
         });
 
-        buttonPanel.setBounds(500, 700, 100, 100);
-        buttonPanel.setBackground(Color.BLACK);
+        // Configuração do buttonPanel
+        buttonPanel.setBounds(250, 700, 500, 500);
+        buttonPanel.setOpaque(false); // Torna o fundo transparente
+        buttonPanel.setBackground(new Color(0, 0, 0, 0)); // Define o fundo como transparente
+        buttonPanel.setBorder(null); // Remove a borda (opcional)
         buttonPanel.add(voltarButton);
 
         frame.add(buttonPanel);
@@ -342,10 +362,12 @@ public class PropiedadesTabela implements ActionListener {
         frame.add(botaoD);
         frame.add(textarea);
         frame.add(textfiled);
+        frame.add(numeroAcertos);
+        frame.add(porcentagemAcertos);
+        frame.add(backgroundLabel);
         frame.setVisible(true);
 
         proximaQuestao();
-
     }
 
     public void proximaQuestao() {
@@ -401,10 +423,6 @@ public class PropiedadesTabela implements ActionListener {
         }
         if (e.getSource() == botaoD) {
             chute = 'D';
-        }
-
-        if (chute == respostas[index]) {
-            chutes_corretos++;
         }
 
         if (chute == respostas[index]) {
@@ -489,8 +507,8 @@ public class PropiedadesTabela implements ActionListener {
         numeroAcertos.setText("Total de acertos: " + chutes_corretos + "/" + total_perguntas);
         porcentagemAcertos.setText("Porcetagem de acertos: " + resultado + "%");
 
-        frame.add(porcentagemAcertos);
-        frame.add(numeroAcertos);
+        numeroAcertos.setVisible(true);
+        porcentagemAcertos.setVisible(true);
     }
 
 }
