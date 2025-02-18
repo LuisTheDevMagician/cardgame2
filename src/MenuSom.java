@@ -1,6 +1,7 @@
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -26,7 +27,6 @@ public class MenuSom extends JFrame {
 
     // Construtor privado para evitar instanciação externa
     private MenuSom() {
-
         carregarSom(LofiHipHop);
         carregarSomBotao();
         carregarSomAcerto();
@@ -37,7 +37,6 @@ public class MenuSom extends JFrame {
         carregarSomVitoriaNotBased();
         carregarSomVitoriaAiMamae();
         carregarSomSeloko();
-
     }
 
     private JButton criarBotao(String texto, Color cor) {
@@ -65,7 +64,9 @@ public class MenuSom extends JFrame {
             if (backgroundThemeStream == null) {
                 throw new IllegalArgumentException("Arquivo de áudio não encontrado: " + audioFile);
             }
-            AudioInputStream backgroundThemeAIS = AudioSystem.getAudioInputStream(backgroundThemeStream);
+            // Usando BufferedInputStream para suportar mark/reset
+            BufferedInputStream bufferedStream = new BufferedInputStream(backgroundThemeStream);
+            AudioInputStream backgroundThemeAIS = AudioSystem.getAudioInputStream(bufferedStream);
             backgroundTheme = AudioSystem.getClip();
             backgroundTheme.open(backgroundThemeAIS);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -79,7 +80,9 @@ public class MenuSom extends JFrame {
             if (SomAcertoStream == null) {
                 throw new IllegalArgumentException("Arquivo de áudio não encontrado: acerto.wav");
             }
-            AudioInputStream SomAcertoStreamAIS = AudioSystem.getAudioInputStream(SomAcertoStream);
+            // Usando BufferedInputStream para suportar mark/reset
+            BufferedInputStream bufferedStream = new BufferedInputStream(SomAcertoStream);
+            AudioInputStream SomAcertoStreamAIS = AudioSystem.getAudioInputStream(bufferedStream);
             acerto = AudioSystem.getClip();
             acerto.open(SomAcertoStreamAIS);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -93,7 +96,9 @@ public class MenuSom extends JFrame {
             if (SomErroStream == null) {
                 throw new IllegalArgumentException("Arquivo de áudio não encontrado: erro.wav");
             }
-            AudioInputStream SomErroStreamAIS = AudioSystem.getAudioInputStream(SomErroStream);
+            // Usando BufferedInputStream para suportar mark/reset
+            BufferedInputStream bufferedStream = new BufferedInputStream(SomErroStream);
+            AudioInputStream SomErroStreamAIS = AudioSystem.getAudioInputStream(bufferedStream);
             erro = AudioSystem.getClip();
             erro.open(SomErroStreamAIS);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -107,7 +112,9 @@ public class MenuSom extends JFrame {
             if (somBotaoStream == null) {
                 throw new IllegalArgumentException("Arquivo de áudio não encontrado: ui-button-click-4-284571.wav");
             }
-            AudioInputStream somBotaoAIS = AudioSystem.getAudioInputStream(somBotaoStream);
+            // Usando BufferedInputStream para suportar mark/reset
+            BufferedInputStream bufferedStream = new BufferedInputStream(somBotaoStream);
+            AudioInputStream somBotaoAIS = AudioSystem.getAudioInputStream(bufferedStream);
             somBotao = AudioSystem.getClip();
             somBotao.open(somBotaoAIS);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -121,7 +128,9 @@ public class MenuSom extends JFrame {
             if (vitoriaStream == null) {
                 throw new IllegalArgumentException("Arquivo de áudio não encontrado: gigachad.wav");
             }
-            AudioInputStream vitoriaAIS = AudioSystem.getAudioInputStream(vitoriaStream);
+            // Usando BufferedInputStream para suportar mark/reset
+            BufferedInputStream bufferedStream = new BufferedInputStream(vitoriaStream);
+            AudioInputStream vitoriaAIS = AudioSystem.getAudioInputStream(bufferedStream);
             vitoriaBASED = AudioSystem.getClip();
             vitoriaBASED.open(vitoriaAIS);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -135,7 +144,9 @@ public class MenuSom extends JFrame {
             if (vitoriaNotBasedStream == null) {
                 throw new IllegalArgumentException("Arquivo de áudio não encontrado: vitoria.wav");
             }
-            AudioInputStream vitoriaNotBasedAIS = AudioSystem.getAudioInputStream(vitoriaNotBasedStream);
+            // Usando BufferedInputStream para suportar mark/reset
+            BufferedInputStream bufferedStream = new BufferedInputStream(vitoriaNotBasedStream);
+            AudioInputStream vitoriaNotBasedAIS = AudioSystem.getAudioInputStream(bufferedStream);
             vitoriaNotBASED = AudioSystem.getClip();
             vitoriaNotBASED.open(vitoriaNotBasedAIS);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -149,7 +160,9 @@ public class MenuSom extends JFrame {
             if (vitoriaAiMamaee == null) {
                 throw new IllegalArgumentException("Arquivo de áudio não encontrado: aimaame.wav");
             }
-            AudioInputStream vitoriaAiMamaeeAIS = AudioSystem.getAudioInputStream(vitoriaAiMamaee);
+            // Usando BufferedInputStream para suportar mark/reset
+            BufferedInputStream bufferedStream = new BufferedInputStream(vitoriaAiMamaee);
+            AudioInputStream vitoriaAiMamaeeAIS = AudioSystem.getAudioInputStream(bufferedStream);
             vitoriaAiMamae = AudioSystem.getClip();
             vitoriaAiMamae.open(vitoriaAiMamaeeAIS);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -163,7 +176,9 @@ public class MenuSom extends JFrame {
             if (vitoriaSelokoNumCompensa == null) {
                 throw new IllegalArgumentException("Arquivo de áudio não encontrado: numcompensa.wav");
             }
-            AudioInputStream vitoriaSelokoNumCompensaAIS = AudioSystem.getAudioInputStream(vitoriaSelokoNumCompensa);
+            // Usando BufferedInputStream para suportar mark/reset
+            BufferedInputStream bufferedStream = new BufferedInputStream(vitoriaSelokoNumCompensa);
+            AudioInputStream vitoriaSelokoNumCompensaAIS = AudioSystem.getAudioInputStream(bufferedStream);
             vitoriaSeloko = AudioSystem.getClip();
             vitoriaSeloko.open(vitoriaSelokoNumCompensaAIS);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -177,7 +192,9 @@ public class MenuSom extends JFrame {
             if (cartaStream == null) {
                 throw new IllegalArgumentException("Arquivo de áudio não encontrado: flipcard.wav");
             }
-            AudioInputStream cartaAIS = AudioSystem.getAudioInputStream(cartaStream);
+            // Usando BufferedInputStream para suportar mark/reset
+            BufferedInputStream bufferedStream = new BufferedInputStream(cartaStream);
+            AudioInputStream cartaAIS = AudioSystem.getAudioInputStream(bufferedStream);
             somCarta = AudioSystem.getClip();
             somCarta.open(cartaAIS);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -191,7 +208,9 @@ public class MenuSom extends JFrame {
             if (cartassStream == null) {
                 throw new IllegalArgumentException("Arquivo de áudio não encontrado: card-flipping.wav");
             }
-            AudioInputStream cartassAIS = AudioSystem.getAudioInputStream(cartassStream);
+            // Usando BufferedInputStream para suportar mark/reset
+            BufferedInputStream bufferedStream = new BufferedInputStream(cartassStream);
+            AudioInputStream cartassAIS = AudioSystem.getAudioInputStream(bufferedStream);
             virarCartas = AudioSystem.getClip();
             virarCartas.open(cartassAIS);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
@@ -200,6 +219,7 @@ public class MenuSom extends JFrame {
         }
     }
 
+    // Métodos de reprodução de som (não alterados)
     public void playSomAcerto() {
         stopBackgroundMusic();
         if (acerto != null) {
@@ -332,7 +352,6 @@ public class MenuSom extends JFrame {
 
         JPanel panel = new JPanel(new GridLayout(6, 1, 11, 11));
 
-
         JButton lofi = criarBotao("Lofi/Atual", Color.CYAN);
         lofi.addActionListener(e -> {
             carregarSom(LofiHipHop);
@@ -381,12 +400,9 @@ public class MenuSom extends JFrame {
         });
         panel.add(omaweamu);
 
-
         panel.setBorder(BorderFactory.createEmptyBorder(9, 9, 9, 9));
         frame.setContentPane(panel);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-
     }
-
 }
