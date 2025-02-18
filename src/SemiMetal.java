@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URL;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -264,16 +265,28 @@ public class SemiMetal {
         deckCarta = new ArrayList<>();
 
         for (String nomeCarta : cardList) {
-            Image imagemCarta = new ImageIcon(getClass().getResource("./semimetal/" + nomeCarta + ".jpg")).getImage();
+            // Carrega a imagem da carta
+            URL resourceUrl = getClass().getResource("/semimetal/" + nomeCarta + ".jpg");
+            if (resourceUrl == null) {
+                System.err.println("Erro: Imagem não encontrada - " + nomeCarta + ".jpg");
+                continue;
+            }
+            Image imagemCarta = new ImageIcon(resourceUrl).getImage();
             ImageIcon iconeCarta = new ImageIcon(imagemCarta.getScaledInstance(cartaLargura, cartaAltura, Image.SCALE_SMOOTH));
 
-            Carta carta = new Carta(nomeCarta, iconeCarta);
+            Carta carta = new Carta(nomeCarta,iconeCarta);
             deckCarta.add(carta);
         }
         deckCarta.addAll(deckCarta);
 
-        Image imagemTrasCarta = new ImageIcon(getClass().getResource("./semimetal/tras.jpg")).getImage();
-        iconeTrasCarta = new ImageIcon(imagemTrasCarta.getScaledInstance(cartaLargura, cartaAltura, Image.SCALE_SMOOTH));
+        // Carrega a imagem do verso da carta
+        URL backResourceUrl = getClass().getResource("/semimetal/tras.jpg");
+        if (backResourceUrl == null) {
+            System.err.println("Erro: Imagem do verso não encontrada - tras.jpg");
+        } else {
+            Image imagemTrasCarta = new ImageIcon(backResourceUrl).getImage();
+            iconeTrasCarta = new ImageIcon(imagemTrasCarta.getScaledInstance(cartaLargura, cartaAltura, Image.SCALE_SMOOTH));
+        }
     }
 
     void misturarCarta() {

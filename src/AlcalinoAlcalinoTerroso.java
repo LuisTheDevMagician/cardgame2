@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URL;
 import java.util.ArrayList;
 import javax.swing.*;
 
@@ -35,7 +36,7 @@ public class AlcalinoAlcalinoTerroso {
     ImageIcon iconeTrasCarta;
 
     int bordaLargura = coluna * cartaLargura;
-    int bordaAltura = coluna * cartaAltura;
+    int bordaAltura = linha * cartaAltura;
 
     JFrame frame = new JFrame("Metais Alcalinos e Alcalinos Terrosos");
     JLabel textoLabel = new JLabel();
@@ -58,19 +59,16 @@ public class AlcalinoAlcalinoTerroso {
 
     private MenuSom menuSom = MenuSom.getInstance();
 
-
     AlcalinoAlcalinoTerroso() {
-
-        if(menuSom != null) {
+        if (menuSom != null) {
             menuSom.startBackgroundMusic();
         }
 
         mostrarCarta();
         misturarCarta();
 
-
         frame.setLayout(new BorderLayout());
-        frame.setBounds(500, 0, bordaLargura, bordaAltura );
+        frame.setBounds(500, 0, bordaLargura, bordaAltura);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -124,9 +122,9 @@ public class AlcalinoAlcalinoTerroso {
 
                                 // Se todos os pares foram encontrados, exibir mensagem
                                 if (contadorAcertos == totalDePares) {
-                                    if(contadorAcertos > contadorDeErros){
+                                    if (contadorAcertos > contadorDeErros) {
                                         menuSom.playVitoria();
-                                    }else{
+                                    } else {
                                         menuSom.playVitoriaNotBased();
                                     }
                                     // Para o contador de tempo quando o jogo termina
@@ -179,7 +177,7 @@ public class AlcalinoAlcalinoTerroso {
 
                 // Reseta o estado dos botões para mostrar o verso das cartas
                 for (int i = 0; i < borda.size(); i++) {
-                    borda.get(i).setIcon(deckCarta.get(i).iconeCarta);
+                    borda.get(i).setIcon(iconeTrasCarta);
                 }
 
                 // Reseta os contadores
@@ -216,7 +214,7 @@ public class AlcalinoAlcalinoTerroso {
         frame.pack();
         frame.setVisible(true);
 
-        //Delay para o inicio do jogo e para o restart
+        // Delay para o inicio do jogo e para o restart
         esconderCartas = new Timer(5000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -226,7 +224,7 @@ public class AlcalinoAlcalinoTerroso {
         esconderCartas.setRepeats(false);//executa apenas uma vez e para até que seja chamada novamente
         esconderCartas.start();
 
-        //delay para virar as cartas durante o jogo
+        // Delay para virar as cartas durante o jogo
         esconderCartasGame = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -234,7 +232,6 @@ public class AlcalinoAlcalinoTerroso {
             }
         });
         esconderCartasGame.setRepeats(false);//executa apenas uma vez e para até que seja chamada novamente
-
 
         // Inicializa o timer para contar o tempo
         timer = new Timer(1000, new ActionListener() {
@@ -259,7 +256,13 @@ public class AlcalinoAlcalinoTerroso {
         deckCarta = new ArrayList<>();
 
         for (String nomeCarta : cardList) {
-            Image imagemCarta = new ImageIcon(getClass().getResource("./alcalino/" + nomeCarta + ".jpg")).getImage();
+            // Carrega a imagem da carta
+            URL resourceUrl = getClass().getResource("/alcalino/" + nomeCarta + ".jpg");
+            if (resourceUrl == null) {
+                System.err.println("Erro: Imagem não encontrada - " + nomeCarta + ".jpg");
+                continue;
+            }
+            Image imagemCarta = new ImageIcon(resourceUrl).getImage();
             ImageIcon iconeCarta = new ImageIcon(imagemCarta.getScaledInstance(cartaLargura, cartaAltura, Image.SCALE_SMOOTH));
 
             Carta carta = new Carta(nomeCarta, iconeCarta);
@@ -267,11 +270,18 @@ public class AlcalinoAlcalinoTerroso {
         }
         deckCarta.addAll(deckCarta);
 
-        Image imagemTrasCarta = new ImageIcon(getClass().getResource("./alcalino/tras.jpg")).getImage();
-        iconeTrasCarta = new ImageIcon(imagemTrasCarta.getScaledInstance(cartaLargura, cartaAltura, Image.SCALE_SMOOTH));
+        // Carrega a imagem do verso da carta
+        URL backResourceUrl = getClass().getResource("/alcalino/tras.jpg");
+        if (backResourceUrl == null) {
+            System.err.println("Erro: Imagem do verso não encontrada - tras.jpg");
+        } else {
+            Image imagemTrasCarta = new ImageIcon(backResourceUrl).getImage();
+            iconeTrasCarta = new ImageIcon(imagemTrasCarta.getScaledInstance(cartaLargura, cartaAltura, Image.SCALE_SMOOTH));
+        }
     }
 
     void misturarCarta() {
+        menuSom.playSomVirarCartas();
         for (int i = 0; i < deckCarta.size(); i++) {
             int j = (int) (Math.random() * deckCarta.size());
             Carta temp = deckCarta.get(i);
