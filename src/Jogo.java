@@ -107,7 +107,7 @@ public class Jogo extends JFrame {
         });
         panel.add(propiedades);
 
-        JButton escolherMusica = criarBotao("Escolha Música de Fundo", new Color(0, 0, 0));
+        JButton escolherMusica = criarBotao("Escolher Música de Fundo", new Color(0, 0, 0));
         escolherMusica.addActionListener(e -> {
             menu.playButtonSound();
             dispose();
