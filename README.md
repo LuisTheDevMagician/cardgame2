@@ -10,10 +10,196 @@ A classe `MenuSom` é uma implementação em Java que gerencia a reprodução de
 - **Singleton Pattern**: Garante que apenas uma instância da classe seja criada.
 
 ## Como Usar
-1. **Instanciação**: Use `MenuSom.getInstance()` para obter a instância única da classe.
-2. **Carregar Sons**: Utilize métodos como `carregarSom(String audioFile)` para carregar arquivos de áudio.
-3. **Reproduzir Sons**: Use métodos como `playSomAcerto()`, `playButtonSound()`, etc., para reproduzir os sons carregados.
-4. **Interface Gráfica**: Chame `selecionarNovoSom()` para abrir uma janela onde o usuário pode selecionar uma nova trilha sonora.
+
+### Instanciação**: Use `MenuSom.getInstance()` para obter a instância única da classe.
+```java
+private static MenuSom instance; // Instância única
+    private Clip backgroundTheme;
+    private Clip somBotao;
+    private Clip acerto;
+    private Clip erro;
+    private Clip vitoriaBASED;
+    private Clip vitoriaNotBASED;
+    private Clip vitoriaAiMamae;
+    private Clip vitoriaSeloko;
+    private Clip somCarta;
+    private Clip virarCartas;
+    private final String LofiHipHop = "LofihiphopMix.wav";
+    private final String LofiJAzz = "AfternoonJAZZ.wav";
+    private final String MemoriesofGreen = "MemoriesOfGreen.wav";
+    private final String MemoryReboot = "memoryReboot.wav";
+    private final String Synthwave = "Synthwave.wav";
+    private final String Omaweamu = "omaweamu.wav";
+
+    // Construtor privado para evitar instanciação externa
+    private MenuSom() {
+        carregarSom(LofiHipHop);
+        carregarSomBotao();
+        carregarSomAcerto();
+        carregarSomErro();
+        carregarSomVitoria();
+        carregarSomCarta();
+        carregarSomVirarCartas();
+        carregarSomVitoriaNotBased();
+        carregarSomVitoriaAiMamae();
+        carregarSomSeloko();
+    }
+
+ // Método para obter a instância única
+    public static MenuSom getInstance() {
+        if (instance == null) {
+            instance = new MenuSom();
+        }
+        return instance;
+    }
+
+//Instanciando em uma classe qualquer do jogo
+private MenuSom menuSom = MenuSom.getInstance();
+
+//Fazendo a veririficação da instancia da classe
+ if (menuSom != null) {
+            menuSom.startBackgroundMusic();
+        }
+```
+
+### Carregar Sons: Utilize métodos como `carregarSom(String audioFile)` para carregar arquivos de áudio.
+```java
+//Exemplo do carregar som da música de fundo
+public void carregarSom(String audioFile) {
+        try (InputStream backgroundThemeStream = getClass().getResourceAsStream("/sons/" + audioFile)) {
+            if (backgroundThemeStream == null) {
+                throw new IllegalArgumentException("Arquivo de áudio não encontrado: " + audioFile);
+            }
+            // Usando BufferedInputStream para suportar mark/reset
+            BufferedInputStream bufferedStream = new BufferedInputStream(backgroundThemeStream);
+            AudioInputStream backgroundThemeAIS = AudioSystem.getAudioInputStream(bufferedStream);
+            backgroundTheme = AudioSystem.getClip();
+            backgroundTheme.open(backgroundThemeAIS);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao carregar o áudio: " + audioFile, "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+//Métodos para tocar e parar a música de fundo
+ public void stopBackgroundMusic() {
+        if (backgroundTheme != null) {
+            backgroundTheme.stop();
+        }
+    }
+
+    public void startBackgroundMusic() {
+        if (backgroundTheme != null) {
+            backgroundTheme.start();
+            backgroundTheme.loop(Clip.LOOP_CONTINUOUSLY);
+        }
+    }
+//Padrao para som de botao
+ public void carregarSomBotao() {
+        try (InputStream somBotaoStream = getClass().getResourceAsStream("/sons/ui-button-click-4-284571.wav")) {
+            if (somBotaoStream == null) {
+                throw new IllegalArgumentException("Arquivo de áudio não encontrado: ui-button-click-4-284571.wav");
+            }
+            // Usando BufferedInputStream para suportar mark/reset
+            BufferedInputStream bufferedStream = new BufferedInputStream(somBotaoStream);
+            AudioInputStream somBotaoAIS = AudioSystem.getAudioInputStream(bufferedStream);
+            somBotao = AudioSystem.getClip();
+            somBotao.open(somBotaoAIS);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao carregar o áudio do botão!", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+//Os metodos restantntes seguem a mesma linha de raciocinio, tocar, parar...
+
+```
+### Reproduzir Sons: Use métodos como `playSomAcerto()`, `playButtonSound()`, etc., para reproduzir os sons carregados.
+```java
+ public void playButtonSound() {
+        stopBackgroundMusic();
+        if (somBotao != null) {
+            somBotao.setFramePosition(0); // Rewind to the beginning
+            somBotao.start();
+        }
+    }
+
+    public void playButtonSound2() {
+        stopBackgroundMusic();
+        if (somBotao != null) {
+            somBotao.setFramePosition(0); // Rewind to the beginning
+            somBotao.start();
+        }
+        startBackgroundMusic();
+    }
+```
+### Interface Gráfica: Chame `selecionarNovoSom()` para abrir uma janela onde o usuário pode selecionar uma nova trilha sonora.
+```java
+ public void selecionarNovoSom() {
+        JFrame frame = new JFrame();
+        frame.setTitle("Menu Som");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new FlowLayout());
+        frame.setSize(800, 600); // Define o tamanho do JFrame
+        frame.setResizable(false);
+
+        JPanel panel = new JPanel(new GridLayout(6, 1, 11, 11));
+
+        JButton lofi = criarBotao("Lofi/Atual", Color.CYAN);
+        lofi.addActionListener(e -> {
+            carregarSom(LofiHipHop);
+            frame.dispose();
+            new Jogo();
+        });
+        panel.add(lofi);
+
+        JButton jazz = criarBotao("Jazz-Lofi", Color.YELLOW);
+        jazz.addActionListener(e -> {
+            carregarSom(LofiJAzz);
+            frame.dispose();
+            new Jogo();
+        });
+        panel.add(jazz);
+
+        JButton green = criarBotao("Memories Of Green", Color.GREEN);
+        green.addActionListener(e -> {
+            carregarSom(MemoriesofGreen);
+            frame.dispose();
+            new Jogo();
+        });
+        panel.add(green);
+
+        JButton memory = criarBotao("Memory Reboot - VOJ & NARVENT", Color.BLACK);
+        memory.addActionListener(e -> {
+            carregarSom(MemoryReboot);
+            frame.dispose();
+            new Jogo();
+        });
+        panel.add(memory);
+
+        JButton synth = criarBotao("Synthwave", Color.MAGENTA);
+        synth.addActionListener(e -> {
+            carregarSom(Synthwave);
+            frame.dispose();
+            new Jogo();
+        });
+        panel.add(synth);
+
+        JButton omaweamu = criarBotao("Omaweamu", Color.PINK);
+        omaweamu.addActionListener(e -> {
+            carregarSom(Omaweamu);
+            frame.dispose();
+            new Jogo();
+        });
+        panel.add(omaweamu);
+
+        panel.setBorder(BorderFactory.createEmptyBorder(9, 9, 9, 9));
+        frame.setContentPane(panel);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+
+//Essa interface é criada por meio de uma função private JButton criarBotao(String texto, Color cor) que será mostrada na main do jogo pois ambas são iguais.
+```
 
 # Jogo - Interface Gráfica para Seleção de Elementos
 
@@ -31,6 +217,22 @@ A classe `Jogo` representa a interface gráfica principal do aplicativo, permiti
 2. **Navegação**: Clique nos botões para abrir novas janelas correspondentes às categorias de elementos.
 3. **Interação com Sons**: Sons de clique são reproduzidos ao pressionar os botões.
 4. **Encerramento**: Clique no botão "Sair" para fechar a aplicação.
+
+## Função que cria os Botôes:
+```java
+private JButton criarBotao(String texto, Color cor) {
+        JButton botao = new JButton(texto);
+        botao.setFont(new Font("Arial", Font.BOLD, 20));
+        botao.setPreferredSize(new Dimension(200, 200)); // Botão quadrado e menor
+        botao.setBackground(cor);  // Definir a cor de fundo
+        botao.setForeground(Color.WHITE); // Cor do texto
+        botao.setFocusPainted(false); // Remove o foco
+        botao.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); // Borda preta
+        botao.setOpaque(true); // Para garantir que a cor de fundo seja visível
+        return botao;
+    }
+```
+
 
 # Classe Modelo para Jogos da Memória
 
