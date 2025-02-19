@@ -642,3 +642,329 @@ void esconderCartasFunction() {
 ## Conclusão
 A classe `Gas` é um modelo para jogos da memória. O nome da classe pode mudar, assim como as cartas utilizadas, mas a estrutura permanece a mesma. O código gerencia a interface gráfica, lógica do jogo e controle do tempo, permitindo reutilização para diferentes conjuntos de cartas.
 
+# Classe Modelo para o Quiz
+
+## Estrutura de Dados
+
+### String[] perguntas: contém as perguntas do jogo
+```java
+ String[] perguntas = {
+            "Qual elemento foi utilizado na primeira bomba Nuclear?", "Qual o elemento mais abundante no universo?",
+            "Qual o único metal encontrado no estado líquido na natureza?",
+            "Todos os compostos orgânicos possuem esse elemento em sua cadeia.",
+            "É usado para fazer os ímãs mais poderosos do mundo, essenciais em fones de ouvido e discos rígidos",
+            "Reage violentamente com a água, liberando gás hidrogênio que pode explodir",
+            "No nosso sangue permite que o oxigênio seja transportado pelo corpo"
+    };
+```
+### String[][] opcoes: guarda as alternativas para cada pergunta
+```java
+ String[][] opcoes = {
+            {"Urânio", "Plutônio", "Protactínio", "Frâncio"},
+            {"Carbono", "Hélio", "Hidrogênio", "Oxigênio"},
+            {"Mercúrio", "Molibdênio", "Nióbio", "Níquel"},
+            {"Cloro", "Enxofre", "Fluor", "Carbono"},
+            {"Bromo", "Neodímio", "Chumbo", "Califórnio"},
+            {"Arsenio", "Potássio", "Polônio", "Rádio"},
+            {"Cálcio", "Oxigênio", "Cripton", "Ferro"}
+    };
+```
+
+### char[] respostas: define a resposta correta para cada pergunta (A, B, C ou D)
+```java
+char[] respostas = {
+            'A', 'C', 'A', 'D','B', 'B', 'D'
+    };
+```
+
+### ImageIcon[][] imagens: armazena imagens relacionadas às opções das perguntas
+```java
+ImageIcon[][] imagens = {
+            {
+                    new ImageIcon(new ImageIcon(getClass().getResource("curiosidade/radioativo/uranio.jpg"))
+                            .getImage().getScaledInstance(cartaLargura, cartaAltura, Image.SCALE_SMOOTH)),
+                    new ImageIcon(new ImageIcon(getClass().getResource("curiosidade/radioativo/plutonio.jpg"))
+                            .getImage().getScaledInstance(cartaLargura, cartaAltura, Image.SCALE_SMOOTH)),
+                    new ImageIcon(new ImageIcon(getClass().getResource("curiosidade/radioativo/protactinio.jpg"))
+                            .getImage().getScaledInstance(cartaLargura, cartaAltura, Image.SCALE_SMOOTH)),
+                    new ImageIcon(new ImageIcon(getClass().getResource("curiosidade/radioativo/francio.jpg"))
+                            .getImage().getScaledInstance(cartaLargura, cartaAltura, Image.SCALE_SMOOTH))
+            }
+```
+### Variáveis como index, chutes_corretos, total_perguntas controlam o progresso do jogo
+```java
+  char chute;
+    char resposta;
+    int index = 0;
+    int chutes_corretos = 0;
+    int total_perguntas = perguntas.length;
+    int resultado;
+    int segundos = 20;
+```
+
+## Interface Gráfica
+```java
+ JFrame frame = new JFrame();
+    JTextField textfiled = new JTextField();
+    JTextArea textarea = new JTextArea();
+    JButton botaoA = new JButton();
+    JButton botaoB = new JButton();
+    JButton botaoC = new JButton();
+    JButton botaoD = new JButton();
+    JLabel respostaLabelA = new JLabel();
+    JLabel respostaLabelB = new JLabel();
+    JLabel respostaLabelC = new JLabel();
+    JLabel respostaLabelD = new JLabel();
+    JTextField tempoLabel = new JTextField();
+    JTextField tempoRestante = new JTextField();
+    JTextField numeroAcertos = new JTextField();
+    JTextField porcentagemAcertos = new JTextField();
+    JPanel buttonPanel = new JPanel();
+    JButton voltarButton = new JButton("Voltar");
+```
+**Usa JFrame como janela principal.**
+
+**JTextField e JTextArea exibem as perguntas e instruções.**
+
+**JButton representa as opções A, B, C e D.**
+
+**JLabel exibe os textos e imagens das opções.**
+
+**JPanel organiza os botões.**
+
+## Lógica do Jogo 
+**Um Timer reduz segundos a cada segundo.**
+
+**Se o tempo acabar (segundos <= 0), a resposta correta é mostrada.**
+
+**Os botões das opções chamam actionPerformed(), que compara a escolha do usuário com respostas[index] e avança a pergunta.**
+
+### Timer do tempo
+```java
+Timer tempo = new Timer(1000, new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            segundos--;
+            tempoRestante.setText(String.valueOf(segundos));
+
+            if(segundos<=0){
+                mostarResposta();
+            }
+        }
+    });
+```
+
+### Função Próxima Questão
+```java
+public void proximaQuestao() {
+        if (index >= total_perguntas) {
+            resultado();
+        } else {
+
+            tempo.stop();
+
+            segundos = 20;
+            tempoRestante.setText(String.valueOf(segundos));
+
+            tempo.start();
+
+            textfiled.setText("Pergunta " + (index + 1) + " de " + " " + perguntas.length);
+            textarea.setText(perguntas[index]);
+            respostaLabelA.setText(opcoes[index][0]);
+            respostaLabelB.setText(opcoes[index][1]);
+            respostaLabelC.setText(opcoes[index][2]);
+            respostaLabelD.setText(opcoes[index][3]);
+
+            // Atualiza as imagens das cartas
+            botaoA.setIcon(imagens[index][0]);
+            botaoB.setIcon(imagens[index][1]);
+            botaoC.setIcon(imagens[index][2]);
+            botaoD.setIcon(imagens[index][3]);
+
+            botaoA.setEnabled(true);
+            botaoB.setEnabled(true);
+            botaoC.setEnabled(true);
+            botaoD.setEnabled(true);
+        }
+    }
+```
+**Essa função carrega a próxima pergunta e reinicia o temporizador.**
+
+**Verifica se o jogo acabou**
+
+**Se todas as perguntas foram respondidas (index >= total_perguntas), chama resultado().Reseta o tempo**
+
+**Para o Timer, reseta segundos = 20 e reinicia o contador.Atualiza a interface com a nova pergunta**
+
+**Define o texto da pergunta e das alternativas.Atualiza as imagens associadas às opções.Habilita os botões das respostas.**
+
+### Função public void actionPerformed(ActionEvent e)
+```java
+@Override
+    public void actionPerformed(ActionEvent e) {
+
+        menuSom.playSomCarta();
+
+        botaoA.setEnabled(false);
+        botaoB.setEnabled(false);
+        botaoC.setEnabled(false);
+        botaoD.setEnabled(false);
+
+        if (e.getSource() == botaoA) {
+            chute = 'A';
+        }
+        if (e.getSource() == botaoB) {
+            chute = 'B';
+        }
+        if (e.getSource() == botaoC) {
+            chute = 'C';
+        }
+        if (e.getSource() == botaoD) {
+            chute = 'D';
+        }
+
+        if (chute == respostas[index]) {
+            menuSom.playSomAcerto();
+            chutes_corretos++;
+        }else{
+            menuSom.playSomErro();
+        }
+
+        mostarResposta();
+    }
+```
+
+**Essa função captura o clique do jogador e verifica se a resposta está correta.**
+
+**Toca um som ao clicar em qualquer botão**
+
+**Impede que o jogador clique em várias opções.Identifica qual botão foi clicado**
+
+**Define chute = 'A', chute = 'B' etc., dependendo do botão pressionado.Compara com a resposta correta.**
+
+**Se chute == respostas[index], toca o som de acerto e aumenta chutes_corretos.Caso contrário, toca o som de erro.**
+
+**Chama mostarResposta() para destacar a resposta correta**
+
+**Controla o feedback visual antes de avançar para a próxima questão.**
+
+## Função Mostrar Resposta
+```java
+ public void mostarResposta() {
+
+        tempo.stop();
+
+        if (respostas[index] != 'A')
+            respostaLabelA.setForeground(new Color(255, 0, 0));
+        if (respostas[index] != 'B')
+            respostaLabelB.setForeground(new Color(255, 0, 0));
+        if (respostas[index] != 'C')
+            respostaLabelC.setForeground(new Color(255, 0, 0));
+        if (respostas[index] != 'D')
+            respostaLabelD.setForeground(new Color(255, 0, 0));
+
+        Timer pausa = new Timer(2000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                respostaLabelA.setForeground(Color.YELLOW);
+                respostaLabelB.setForeground(Color.YELLOW);
+                respostaLabelC.setForeground(Color.YELLOW);
+                respostaLabelD.setForeground(Color.YELLOW);
+                index++;
+                proximaQuestao();
+            }
+        });
+
+        pausa.setRepeats(false);
+        pausa.start();
+    }
+```
+**Essa função destaca a resposta correta por 2 segundos antes de carregar a próxima pergunta.**
+
+**Para o temporizador. O tempo para de contar ao responder. Destaca a resposta correta.**
+
+**Define a cor vermelha (Color(255,0,0)) para as alternativas erradas.**
+
+**Cria um pequeno atraso antes da próxima pergunta. Usa um Timer de 2 segundos (2000 ms).**
+
+**Após o tempo, restaura a cor padrão (Color.YELLOW) e chama proximaQuestao().**
+
+## Função Resultado
+```java
+public void resultado() {
+        botaoA.setEnabled(false);
+        botaoB.setEnabled(false);
+        botaoC.setEnabled(false);
+        botaoD.setEnabled(false);
+
+        botaoA.setVisible(false);
+        botaoB.setVisible(false);
+        botaoC.setVisible(false);
+        botaoD.setVisible(false);
+
+        resultado = (int) ((chutes_corretos / (double) total_perguntas) * 100);
+
+        if(resultado == 100){
+            menuSom.playVitoria();
+            textfiled.setText("Parabéns acertou todas as questões!");
+            textfiled.setFont(new Font("Arial", Font.PLAIN, 40));
+        }else if(resultado < 100 && resultado >= 70){
+            menuSom.playVitoriaNotBased();
+            textfiled.setText("Aprovado, parabéns");
+            textfiled.setFont(new Font("Arial", Font.PLAIN, 60));
+        } else if (resultado >= 40 && resultado < 70) {
+            menuSom.playVitoriaAimamae();
+            textfiled.setText("Prova final, estude mais");
+            textfiled.setFont(new Font("Arial", Font.PLAIN, 60));
+        } else if (resultado < 40) {
+            menuSom.playVitoriaSeloko();
+            textfiled.setText("Reprovado");
+            textfiled.setFont(new Font("Arial", Font.PLAIN, 60));
+        }
+
+        textarea.setVisible(false);
+        respostaLabelA.setVisible(false);
+        respostaLabelB.setVisible(false);
+        respostaLabelC.setVisible(false);
+        respostaLabelD.setVisible(false);
+
+        tempoRestante.setVisible(false);
+        tempoLabel.setVisible(false);
+
+        numeroAcertos.setText("Total de acertos: " + chutes_corretos + "/" + total_perguntas);
+        porcentagemAcertos.setText("Porcetagem de acertos: " + resultado + "%");
+
+        numeroAcertos.setVisible(true);
+        porcentagemAcertos.setVisible(true);
+    }
+```
+
+Essa função exibe a pontuação final e oculta os elementos da tela.
+
+Desativa e oculta os botões de resposta
+
+Impede novas interações após o término do jogo.
+
+Calcula a porcentagem de acertos
+
+resultado = (int) ((chutes_corretos / (double) total_perguntas) * 100);
+
+Define uma mensagem baseada no desempenho
+
+🔥 100% → "Parabéns acertou todas as questões!" (menuSom.playVitoria();)
+
+✅ 70% a 99% → "Aprovado, parabéns" (menuSom.playVitoriaNotBased();)
+
+⚠️ 40% a 69% → "Prova final, estude mais" (menuSom.playVitoriaAimamae();)
+
+❌ < 40% → "Reprovado" (menuSom.playVitoriaSeloko();)
+
+Esconde os elementos da pergunta e exibe o resultado
+
+textarea e as labels das respostas são ocultadas.
+
+numeroAcertos e porcentagemAcertos são mostrados com o desempenho.
+
+
+
+
