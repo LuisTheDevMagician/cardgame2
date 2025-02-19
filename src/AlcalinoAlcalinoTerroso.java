@@ -177,7 +177,7 @@ public class AlcalinoAlcalinoTerroso {
 
                 // Reseta o estado dos botões para mostrar o verso das cartas
                 for (int i = 0; i < borda.size(); i++) {
-                    borda.get(i).setIcon(iconeTrasCarta);
+                    borda.get(i).setIcon(deckCarta.get(i).iconeCarta);
                 }
 
                 // Reseta os contadores
