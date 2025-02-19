@@ -966,5 +966,5 @@ textarea e as labels das respostas são ocultadas.
 numeroAcertos e porcentagemAcertos são mostrados com o desempenho.
 
 
-
+Link para o arquivo JAR: https://drive.google.com/file/d/1hynDqqh33O87bVFl80z7DBxnnJ2kNI05/view?usp=drive_link
 
